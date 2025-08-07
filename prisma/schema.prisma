@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model bookings {
+  id            Int       @id @default(autoincrement())
+  userBookingId Int?
+  roomId        Int?
+  checkinDate   DateTime? @db.DateTime(0)
+  checkoutDate  DateTime? @db.DateTime(0)
+  so_khach      Int?
+  isActive      Boolean?  @default(true)
+  deletedBy     Int       @default(0)
+  isDeleted     Boolean   @default(false)
+  deletedAt     DateTime? @db.Timestamp(0)
+  createdAt     DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime  @default(now()) @db.Timestamp(0)
+  users         users?    @relation(fields: [userBookingId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookings_ibfk_1")
+  rooms         rooms?    @relation(fields: [roomId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookings_ibfk_2")
+
+  @@index([roomId], map: "roomId")
+  @@index([userBookingId], map: "userBookingId")
+}
+
+model comments {
+  id            Int       @id @default(autoincrement())
+  userCommentId Int?
+  roomId        Int?
+  date          DateTime? @db.Date
+  comment       String?   @db.VarChar(255)
+  star_comment  Int?
+  isActive      Boolean?  @default(true)
+  deletedBy     Int       @default(0)
+  isDeleted     Boolean   @default(false)
+  deletedAt     DateTime? @db.Timestamp(0)
+  createdAt     DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime  @default(now()) @db.Timestamp(0)
+  users         users?    @relation(fields: [userCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_1")
+  rooms         rooms?    @relation(fields: [roomId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_2")
+
+  @@index([roomId], map: "roomId")
+  @@index([userCommentId], map: "userCommentId")
+}
+
+model locations {
+  id            Int       @id @default(autoincrement())
+  name_location String?   @db.VarChar(255)
+  province      String?   @db.VarChar(255)
+  country       Int?
+  picture       String?   @db.VarChar(255)
+  isActive      Boolean?  @default(true)
+  deletedBy     Int       @default(0)
+  isDeleted     Boolean   @default(false)
+  deletedAt     DateTime? @db.Timestamp(0)
+  createdAt     DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime  @default(now()) @db.Timestamp(0)
+  rooms         rooms[]
+}
+
+model rooms {
+  id         Int        @id @default(autoincrement())
+  ten_phong  String?    @db.VarChar(255)
+  so_khach   Int?
+  phong_ngu  Int?
+  giuong     Int?
+  phong_tam  Int?
+  mo_ta      String?    @db.VarChar(255)
+  gia_tien   Int?
+  may_giat   Boolean?
+  ban_la     Boolean?
+  tivi       Boolean?
+  dieu_hoa   Boolean?
+  wifi       Boolean?
+  bep        Boolean?
+  do_xe      Boolean?
+  ho_boi     Boolean?
+  ban_ui     Boolean?
+  hinh_anh   String?    @db.VarChar(255)
+  locationId Int?
+  isActive   Boolean?   @default(true)
+  deletedBy  Int        @default(0)
+  isDeleted  Boolean    @default(false)
+  deletedAt  DateTime?  @db.Timestamp(0)
+  createdAt  DateTime   @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime   @default(now()) @db.Timestamp(0)
+  bookings   bookings[]
+  comments   comments[]
+  locations  locations? @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rooms_ibfk_1")
+
+  @@index([locationId], map: "locationId")
+}
+
+model users {
+  id        Int        @id @default(autoincrement())
+  name      String?    @db.VarChar(255)
+  email     String     @unique(map: "email") @db.VarChar(255)
+  pass_word String     @db.VarChar(255)
+  phone     String?    @db.VarChar(255)
+  birth_day String?    @db.VarChar(255)
+  gender    Boolean?   @default(true)
+  role      String?    @db.VarChar(255)
+  avatar    String?    @db.VarChar(255)
+  isActive  Boolean?   @default(true)
+  deletedBy Int        @default(0)
+  isDeleted Boolean    @default(false)
+  deletedAt DateTime?  @db.Timestamp(0)
+  createdAt DateTime   @default(now()) @db.Timestamp(0)
+  updatedAt DateTime   @default(now()) @db.Timestamp(0)
+  bookings  bookings[]
+  comments  comments[]
+}
