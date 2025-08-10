@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,7 +9,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { UserRole } from './dto/user-role.enum';
-import { FindAllDto } from './dto/get-all.dto';
+import { FindAllDto } from './dto/find-all-user.dto';
 import { cloudinary } from 'src/common/cloudinary/init.cloudinary';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -143,10 +144,21 @@ export class UsersService {
     return userWithoutPassword;
   }
 
-  async update(id: number, dto: UpdateUserDto) {
-    const user = await this.prisma.users.findUnique({
-      where: { id },
-    });
+  async update(id: number, dto: UpdateUserDto, currentUser: users) {
+    const isSelf = currentUser.id === id;
+    const isAdmin = currentUser.role === 'admin';
+
+    if (!isSelf && !isAdmin) {
+      throw new ForbiddenException(
+        'Bạn không có quyền cập nhật người dùng này',
+      );
+    }
+
+    if (!isAdmin && dto.role === UserRole.ADMIN) {
+      throw new ForbiddenException('Bạn không được phép chỉnh sửa quyền admin');
+    }
+
+    const user = await this.prisma.users.findUnique({ where: { id } });
 
     if (!user || user.isDeleted) {
       throw new NotFoundException('Người dùng không tồn tại');
@@ -196,6 +208,7 @@ export class UsersService {
     }
 
     return {
+      message: 'Cập nhật avatar thành công',
       userId: user.id,
       folder: 'images/',
       filename: file.filename,
@@ -266,6 +279,7 @@ export class UsersService {
     }
 
     return {
+      message: 'Cập nhật avatar thành công',
       userId: user.id,
       folder: uploadResult.folder,
       filename: file.originalname,
@@ -273,11 +287,15 @@ export class UsersService {
     };
   }
 
-  async remove(id: number, deletedBy: number) {
-    const user = await this.prisma.users.findUnique({
-      where: { id },
-    });
+  async remove(id: number, currentUser: users) {
+    const isSelf = currentUser.id === id;
+    const isAdmin = currentUser.role === 'admin';
 
+    if (!isSelf && !isAdmin) {
+      throw new ForbiddenException('Bạn không có quyền xóa người dùng này');
+    }
+
+    const user = await this.prisma.users.findUnique({ where: { id } });
     if (!user || user.isDeleted) {
       throw new NotFoundException('Người dùng không tồn tại');
     }
@@ -287,7 +305,7 @@ export class UsersService {
       data: {
         isDeleted: true,
         deletedAt: new Date(),
-        deletedBy,
+        deletedBy: currentUser.id,
       },
     });
 

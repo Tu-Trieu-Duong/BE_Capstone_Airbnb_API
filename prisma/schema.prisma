@@ -52,7 +52,7 @@ model locations {
   id            Int       @id @default(autoincrement())
   name_location String?   @db.VarChar(255)
   province      String?   @db.VarChar(255)
-  country       Int?
+  country       String?   @db.VarChar(255)
   picture       String?   @db.VarChar(255)
   isActive      Boolean?  @default(true)
   deletedBy     Int       @default(0)

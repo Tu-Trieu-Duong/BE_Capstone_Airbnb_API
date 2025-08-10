@@ -1,12 +1,23 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, ParseIntPipe, Put, ForbiddenException, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  ParseIntPipe,
+  Put,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiParam } from '@nestjs/swagger';
-import { FindAllDto } from './dto/get-all.dto';
+import { FindAllDto } from './dto/find-all-user.dto';
 import { User } from 'src/common/decorator/user.decorator';
-import { AuthGuard } from '@nestjs/passport';
-import { Roles } from 'src/common/decorator/role.decorator';
 import { ProtectGuard } from 'src/common/protect/protect.guard';
 import { RolesGuard } from 'src/common/protect/role.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -35,30 +46,13 @@ export class UsersController {
   }
 
   @Put(':id')
-  @ApiParam({ name: 'id', type: Number })
-  @ApiBearerAuth()
   @UseGuards(ProtectGuard, RolesGuard)
-  async update(
+  update(
     @User() user,
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateUserDto,
   ) {
-    const isSelf = user.id === id;
-    const isAdmin = user.role === 'admin';
-
-    console.log({ isSelf, isAdmin });
-
-    if (!isAdmin && dto.role && dto.role === 'admin') {
-      throw new ForbiddenException('Bạn không được phép chỉnh sửa quyền admin');
-    }
-
-    if (!isSelf && !isAdmin) {
-      throw new ForbiddenException(
-        'Bạn không có quyền cập nhật thông tin người khác',
-      );
-    }
-
-    return this.usersService.update(id, dto);
+    return this.usersService.update(id, dto, user);
   }
 
   @Post('avatar-local')
@@ -104,17 +98,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiParam({ name: 'id', type: Number })
-  @ApiBearerAuth()
   @UseGuards(ProtectGuard, RolesGuard)
-  async remove(@User() user, @Param('id', ParseIntPipe) id: number) {
-    const isSelf = user.id === id;
-    const isAdmin = user.role === 'admin';
-
-    if (!isSelf && !isAdmin) {
-      throw new ForbiddenException('Bạn không có quyền xóa người dùng này');
-    }
-
-    return this.usersService.remove(id, user.id);
+  remove(@User() user, @Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id, user);
   }
 }

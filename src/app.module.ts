@@ -7,9 +7,12 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ProtectStrategy } from './common/protect/protect.strategy';
 import { UsersModule } from './modules/users/users.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { LocationsModule } from './modules/locations/locations.module';
+import { RoomModule } from './modules/room/room.module';
+
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, PrismaModule, UsersModule],
+  imports: [ConfigModule.forRoot(), AuthModule, PrismaModule, UsersModule, LocationsModule, RoomModule],
   controllers: [AppController],
   providers: [AppService, ProtectStrategy],
 })

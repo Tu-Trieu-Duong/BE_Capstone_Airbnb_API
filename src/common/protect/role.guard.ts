@@ -1,4 +1,3 @@
-// src/common/guards/roles.guard.ts
 import {
   CanActivate,
   ExecutionContext,
@@ -19,7 +18,7 @@ export class RolesGuard implements CanActivate {
     );
 
     if (!requiredRoles || requiredRoles.length === 0) {
-      return true; // không yêu cầu role
+      return true; 
     }
 
     const request = context.switchToHttp().getRequest();
