@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SignupDto } from './dto/signup.dto';
 import { Public } from 'src/common/decorator/is-public.decorator';
 import { SigninDto } from './dto/signin.dto';
@@ -23,7 +23,7 @@ export class AuthController {
     return this.authService.signin(body);
   }
 
-  @Public()
+  @ApiBearerAuth()
   @Post('refresh-token')
   async refresh(@Body() body: RefreshTokenDto) {
     return this.authService.refreshToken(body);

@@ -99,8 +99,6 @@ export class BookingService {
       );
     }
 
-    
-
     const booking = await this.prisma.bookings.create({
       data: {
         userBookingId: user.id,
@@ -115,12 +113,7 @@ export class BookingService {
   }
 
   async findAll(query: FindAllBookingDto) {
-    const {
-      page = 1,
-      pageSize = 10,
-      userBookingId,
-      roomId,
-    } = query;
+    const { page = 1, pageSize = 10, userBookingId, roomId } = query;
 
     const where: any = { isDeleted: false };
 
@@ -182,12 +175,13 @@ export class BookingService {
   }
 
   async findOne(id: number) {
+    console.trace('findOne called with id:', id);
     const booking = await this.prisma.bookings.findUnique({
       where: {
         id: id,
-        isDeleted: false,
-    } });
-    if (!booking || booking.isDeleted) {
+      },
+    });
+    if (!booking) {
       throw new NotFoundException(
         `Booking với ID ${id} không tồn tại hoặc đã bị xóa`,
       );
@@ -196,9 +190,11 @@ export class BookingService {
   }
 
   async update(id: number, body: UpdateBookingDto, user: users) {
-    const booking = await this.prisma.bookings.findUnique({ where: { id, isDeleted: false } });
+    const booking = await this.prisma.bookings.findUnique({
+      where: { id, isDeleted: false },
+    });
 
-    if (!booking || booking.isDeleted) {
+    if (!booking) {
       throw new NotFoundException(
         `Booking với ID ${id} không tồn tại hoặc đã bị xóa`,
       );
@@ -295,7 +291,7 @@ export class BookingService {
     return { message: 'Sửa đặt phòng thành công', booking: updateBooking };
   }
 
-  async checkAvailability(
+  async checkAvailableRoom(
     roomId: number,
     checkinDate: string,
     checkoutDate: string,
@@ -351,9 +347,11 @@ export class BookingService {
   }
 
   async remove(id: number, user: users) {
-    const booking = await this.prisma.bookings.findUnique({ where: { id } });
+    const booking = await this.prisma.bookings.findUnique({
+      where: { id, isDeleted: false },
+    });
 
-    if (!booking || booking.isDeleted) {
+    if (!booking) {
       throw new NotFoundException(
         `Booking với ID ${id} không tồn tại hoặc đã bị xóa`,
       );

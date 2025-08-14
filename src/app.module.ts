@@ -1,6 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,8 +13,7 @@ import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule, PrismaModule, UsersModule, LocationsModule, RoomModule,  BookingModule, CommentModule],
-  controllers: [AppController],
-  providers: [AppService, ProtectStrategy],
+  providers: [ ProtectStrategy],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

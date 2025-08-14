@@ -138,7 +138,7 @@ export class CommentService {
       throw new ForbiddenException('Bạn không có quyền sửa bình luận này');
     }
 
-    if (body.roomId) {
+    if (body.roomId && body.roomId !== comment.roomId) {
       const room = await this.prisma.rooms.findUnique({
         where: { id: body.roomId, isDeleted: false },
       });
@@ -164,8 +164,7 @@ export class CommentService {
     const updateComment = await this.prisma.comments.update({
       where: { id },
       data: {
-        roomId: body.roomId,
-        comment: body.comment,
+        roomId: body.roomId ?? comment.roomId, 
         star_comment: body.star_comment,
       },
       select: {

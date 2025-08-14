@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
-export class CheckAvailabilityDto {
+export class CheckAvailableRoomDto {
   @ApiProperty({
     example: 1,
     description: 'ID của phòng cần kiểm tra',

@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
@@ -17,7 +16,7 @@ import { users } from 'generated/prisma';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { Public } from 'src/common/decorator/is-public.decorator';
 import { FindAllBookingDto } from './dto/find-all-booking.dto';
-import { CheckAvailabilityDto } from './dto/check-available-room.dto';
+import {  CheckAvailableRoomDto } from './dto/check-available-room.dto';
 
 @Controller('booking')
 export class BookingController {
@@ -52,10 +51,12 @@ export class BookingController {
   }
 
   @Public()
-  @Get('check-availability')
-  checkAvailability(@Query() query: CheckAvailabilityDto) {
-    return this.bookingService.checkAvailability(
-      +query.roomId, query.checkinDate, query.checkoutDate,
+  @Get('check/availableRooms')
+  checkAvailableRoom(@Query() query: CheckAvailableRoomDto) {
+    return this.bookingService.checkAvailableRoom(
+      +query.roomId,
+      query.checkinDate,
+      query.checkoutDate,
     );
   }
 

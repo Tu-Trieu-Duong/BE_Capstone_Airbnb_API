@@ -11,16 +11,26 @@ import * as fs from 'fs';
 export class RoomService {
   constructor(private readonly prisma: PrismaService) {}
   async create(body: CreateRoomDto) {
-    const existing = await this.prisma.rooms.findFirst({
+    const existingRoom = await this.prisma.rooms.findFirst({
       where: {
         ten_phong: body.ten_phong,
         isDeleted: false,
       },
     });
-    if (existing) {
+    if (existingRoom) {
       throw new BadRequestException('Phòng này đã tồn tại');
     }
 
+    const existingLocation = await this.prisma.locations.findFirst({
+      where: {
+        id: body.locationId,
+        isDeleted: false,
+      },
+    })
+
+    if (!existingLocation) {
+      throw new BadRequestException('Địa chỉ này không tồn tại');
+    }
     const room = await this.prisma.rooms.create({ data: body });
 
     return { message: 'Tạo phòng thành công', room: room };
