@@ -182,7 +182,11 @@ export class BookingService {
   }
 
   async findOne(id: number) {
-    const booking = await this.prisma.bookings.findUnique({ where: { id } });
+    const booking = await this.prisma.bookings.findUnique({
+      where: {
+        id: id,
+        isDeleted: false,
+    } });
     if (!booking || booking.isDeleted) {
       throw new NotFoundException(
         `Booking với ID ${id} không tồn tại hoặc đã bị xóa`,
@@ -192,7 +196,7 @@ export class BookingService {
   }
 
   async update(id: number, body: UpdateBookingDto, user: users) {
-    const booking = await this.prisma.bookings.findUnique({ where: { id } });
+    const booking = await this.prisma.bookings.findUnique({ where: { id, isDeleted: false } });
 
     if (!booking || booking.isDeleted) {
       throw new NotFoundException(

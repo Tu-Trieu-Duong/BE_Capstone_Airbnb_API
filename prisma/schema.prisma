@@ -30,19 +30,19 @@ model bookings {
 
 model comments {
   id            Int       @id @default(autoincrement())
-  userCommentId Int?
-  roomId        Int?
-  date          DateTime? @db.Date
+  userCommentId Int
+  roomId        Int
+  date          DateTime? @default(now()) @db.DateTime(0)
   comment       String?   @db.VarChar(255)
-  star_comment  Int?
+  star_comment  Int?      @default(5)
   isActive      Boolean?  @default(true)
   deletedBy     Int       @default(0)
   isDeleted     Boolean   @default(false)
   deletedAt     DateTime? @db.Timestamp(0)
   createdAt     DateTime  @default(now()) @db.Timestamp(0)
   updatedAt     DateTime  @default(now()) @db.Timestamp(0)
-  users         users?    @relation(fields: [userCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_1")
-  rooms         rooms?    @relation(fields: [roomId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_2")
+  users         users     @relation(fields: [userCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_1")
+  rooms         rooms     @relation(fields: [roomId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_2")
 
   @@index([roomId], map: "roomId")
   @@index([userCommentId], map: "userCommentId")

@@ -75,7 +75,7 @@ export class RoomService {
   }
 
   async findOne(id: number) {
-    const room = await this.prisma.rooms.findUnique({ where: { id } });
+    const room = await this.prisma.rooms.findUnique({ where: { id, isDeleted: false } });
     if (!room || room.isDeleted) {
       throw new NotFoundException(
         `Phòng với ID ${id} không tồn tại hoặc đã bị xóa`,
