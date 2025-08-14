@@ -1,0 +1,963 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "operationId": "AuthController_signup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SignupDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Auth"]
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "operationId": "AuthController_signin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SigninDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Auth"]
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RefreshTokenDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Auth"]
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 10, "type": "number" }
+          },
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name (tên)\n- email (địa chỉ email)\n- phone (số điện thoại)\n- gender (giới tính: nam (true), nữ (false))\n- role (vai trò: admin/user)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name\":\"John\"}'",
+            "schema": {
+              "example": "{\"name\": \"John\", \"email\": \"john@example.com\", \"phone\": \"0123\"}",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      },
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUserDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      },
+      "put": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUserDto" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      }
+    },
+    "/users/avatar-local": {
+      "post": {
+        "operationId": "UsersController_avatarLocal",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      }
+    },
+    "/users/avatar-cloud": {
+      "post": {
+        "operationId": "UsersController_avatarCloud",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Users"]
+      }
+    },
+    "/locations": {
+      "post": {
+        "operationId": "LocationsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateLocationDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Locations"]
+      },
+      "get": {
+        "operationId": "LocationsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 10, "type": "number" }
+          },
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name_location (tên vị trí)\n- province (tỉnh)\n- country (quốc gia)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name_location\": \"Ho Chi Minh\", \"province\": \"Ho Chi Minh\", \"country\": \"Vietnam\"}'",
+            "schema": {
+              "example": "{\"name_location\": \"Ho Chi Minh\"}",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Locations"]
+      }
+    },
+    "/locations/{id}": {
+      "get": {
+        "operationId": "LocationsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Locations"]
+      },
+      "put": {
+        "operationId": "LocationsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateLocationDto" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Locations"]
+      },
+      "delete": {
+        "operationId": "LocationsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Locations"]
+      }
+    },
+    "/locations/upload/{id}": {
+      "put": {
+        "operationId": "LocationsController_upload",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "picture": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Locations"]
+      }
+    },
+    "/room": {
+      "post": {
+        "operationId": "RoomController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateRoomDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Room"]
+      },
+      "get": {
+        "operationId": "RoomController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 10, "type": "number" }
+          },
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n        \n    - Kiểu String: ten_phong; mo_ta\n\n    - Kiểu number: so_khach; phong_ngu; giuong; phong_tam; gia_tien; locationId\n    \n    - Kiểu boolean: may_giat; ban_la; tivi; dieu_hoa; wifi; bep; do_xe; ho_boi; ban_ui\n\n    Lưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"ten_phong\": \"Luxury\", \"so_khach\": 4, \"wifi\": true}'",
+            "schema": {
+              "example": "{\"ten_phong\": \"Luxury\"}",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Room"]
+      }
+    },
+    "/room/{id}": {
+      "get": {
+        "operationId": "RoomController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Room"]
+      },
+      "put": {
+        "operationId": "RoomController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateRoomDto" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Room"]
+      },
+      "delete": {
+        "operationId": "RoomController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Room"]
+      }
+    },
+    "/room/upload/{id}": {
+      "put": {
+        "operationId": "RoomController_upload",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pictures": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Room"]
+      }
+    },
+    "/room/picture/{imageId}": {
+      "delete": {
+        "operationId": "RoomController_deletePicture",
+        "parameters": [
+          {
+            "name": "imageId",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Room"]
+      }
+    },
+    "/booking": {
+      "post": {
+        "operationId": "BookingController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateBookingDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Booking"]
+      },
+      "get": {
+        "operationId": "BookingController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 10, "type": "number" }
+          },
+          {
+            "name": "userBookingId",
+            "required": false,
+            "in": "query",
+            "description": "Lọc theo ID người đặt phòng",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "roomId",
+            "required": false,
+            "in": "query",
+            "description": "Lọc theo ID phòng",
+            "schema": { "example": 1, "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Booking"]
+      }
+    },
+    "/booking/{id}": {
+      "get": {
+        "operationId": "BookingController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Booking"]
+      },
+      "put": {
+        "operationId": "BookingController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateBookingDto" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Booking"]
+      },
+      "delete": {
+        "operationId": "BookingController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Booking"]
+      }
+    },
+    "/booking/check/availableRooms": {
+      "get": {
+        "operationId": "BookingController_checkAvailableRoom",
+        "parameters": [
+          {
+            "name": "roomId",
+            "required": true,
+            "in": "query",
+            "description": "ID của phòng cần kiểm tra",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "checkinDate",
+            "required": true,
+            "in": "query",
+            "description": "Ngày check-in (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)",
+            "schema": {
+              "example": "2025-08-14T12:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkoutDate",
+            "required": true,
+            "in": "query",
+            "description": "Ngày check-out (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)",
+            "schema": {
+              "example": "2025-08-15T12:00:00.000Z",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Booking"]
+      }
+    },
+    "/comment": {
+      "post": {
+        "operationId": "CommentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateCommentDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Comment"]
+      },
+      "get": {
+        "operationId": "CommentController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": { "example": 10, "type": "number" }
+          },
+          {
+            "name": "roomId",
+            "required": false,
+            "in": "query",
+            "description": "Lọc bình luận theo ID phòng",
+            "schema": { "example": 1, "type": "number" }
+          },
+          {
+            "name": "userCommentId",
+            "required": false,
+            "in": "query",
+            "description": "Lọc bình luận theo ID phòng",
+            "schema": { "example": 1, "type": "number" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Comment"]
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "operationId": "CommentController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Comment"]
+      },
+      "put": {
+        "operationId": "CommentController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateCommentDto" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Comment"]
+      },
+      "delete": {
+        "operationId": "CommentController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "security": [{ "bearer": [] }],
+        "tags": ["Comment"]
+      }
+    }
+  },
+  "info": {
+    "title": "Airbnb Clone API",
+    "description": "API for Airbnb clone",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+    },
+    "schemas": {
+      "SignupDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "example": "tutrieuduong@gmail.com" },
+          "password": { "type": "string", "example": "123aA@" },
+          "name": { "type": "string", "example": "Nguyen Van A" },
+          "phone": { "type": "string", "example": "0123456789" },
+          "birth_day": { "type": "string", "example": "2000-01-01" },
+          "gender": { "type": "boolean", "example": true }
+        },
+        "required": [
+          "email",
+          "password",
+          "name",
+          "phone",
+          "birth_day",
+          "gender"
+        ]
+      },
+      "SigninDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "example": "tutrieuduong@gmail.com" },
+          "password": { "type": "string", "example": "123aA@" }
+        },
+        "required": ["email", "password"]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "example": "your_refresh_token_here"
+          }
+        },
+        "required": ["refreshToken"]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "example": "tutrieuduong@gmail.com" },
+          "password": { "type": "string", "example": "123aA@" },
+          "name": { "type": "string", "example": "Nguyen Van A" },
+          "phone": { "type": "string", "example": "0123456789" },
+          "birth_day": { "type": "string", "example": "2000-01-01" },
+          "gender": {
+            "type": "boolean",
+            "description": "Giới tính: true = Nam, false = Nữ",
+            "default": true
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "admin"],
+            "example": "user",
+            "description": "Vai trò của người dùng"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "name",
+          "phone",
+          "birth_day",
+          "gender",
+          "role"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Nguyen Van A" },
+          "phone": { "type": "string", "example": "0123456789" },
+          "birth_day": { "type": "string", "example": "2000-01-01" },
+          "gender": {
+            "type": "boolean",
+            "description": "Giới tính: true = Nam, false = Nữ",
+            "default": true
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "admin"],
+            "example": "user",
+            "description": "Vai trò của người dùng"
+          }
+        },
+        "required": ["name", "phone", "birth_day", "role"]
+      },
+      "CreateLocationDto": {
+        "type": "object",
+        "properties": {
+          "name_location": { "type": "string", "example": "Ho Chi Minh City" },
+          "province": { "type": "string", "example": "Ho Chi Minh" },
+          "country": { "type": "string", "example": "Vietnam" }
+        },
+        "required": ["name_location", "province", "country"]
+      },
+      "UpdateLocationDto": {
+        "type": "object",
+        "properties": {
+          "name_location": { "type": "string", "example": "Ho Chi Minh City" },
+          "province": { "type": "string", "example": "Ho Chi Minh" },
+          "country": { "type": "string", "example": "Vietnam" }
+        }
+      },
+      "CreateRoomDto": {
+        "type": "object",
+        "properties": {
+          "ten_phong": { "type": "string", "example": "Phòng Deluxe" },
+          "so_khach": { "type": "number", "example": 4 },
+          "phong_ngu": { "type": "number", "example": 2 },
+          "giuong": { "type": "number", "example": 2 },
+          "phong_tam": { "type": "number", "example": 1 },
+          "mo_ta": {
+            "type": "string",
+            "example": "Phòng rộng, có ban công..."
+          },
+          "gia_tien": { "type": "number", "example": 500000 },
+          "quantity": { "type": "number", "example": 1 },
+          "may_giat": { "type": "boolean", "example": true },
+          "ban_la": { "type": "boolean", "example": false },
+          "tivi": { "type": "boolean", "example": true },
+          "dieu_hoa": { "type": "boolean", "example": true },
+          "wifi": { "type": "boolean", "example": true },
+          "bep": { "type": "boolean", "example": true },
+          "do_xe": { "type": "boolean", "example": true },
+          "ho_boi": { "type": "boolean", "example": true },
+          "ban_ui": { "type": "boolean", "example": false },
+          "locationId": { "type": "number", "example": 1 }
+        },
+        "required": [
+          "ten_phong",
+          "so_khach",
+          "phong_ngu",
+          "giuong",
+          "phong_tam",
+          "gia_tien",
+          "quantity",
+          "locationId"
+        ]
+      },
+      "UpdateRoomDto": {
+        "type": "object",
+        "properties": {
+          "ten_phong": { "type": "string", "example": "Phòng Deluxe" },
+          "so_khach": { "type": "number", "example": 4 },
+          "phong_ngu": { "type": "number", "example": 2 },
+          "giuong": { "type": "number", "example": 2 },
+          "phong_tam": { "type": "number", "example": 1 },
+          "mo_ta": {
+            "type": "string",
+            "example": "Phòng rộng, có ban công..."
+          },
+          "gia_tien": { "type": "number", "example": 500000 },
+          "quantity": { "type": "number", "example": 1 },
+          "may_giat": { "type": "boolean", "example": true },
+          "ban_la": { "type": "boolean", "example": false },
+          "tivi": { "type": "boolean", "example": true },
+          "dieu_hoa": { "type": "boolean", "example": true },
+          "wifi": { "type": "boolean", "example": true },
+          "bep": { "type": "boolean", "example": true },
+          "do_xe": { "type": "boolean", "example": true },
+          "ho_boi": { "type": "boolean", "example": true },
+          "ban_ui": { "type": "boolean", "example": false },
+          "locationId": { "type": "number", "example": 1 }
+        }
+      },
+      "CreateBookingDto": {
+        "type": "object",
+        "properties": {
+          "roomId": { "type": "number", "example": 1 },
+          "so_khach": { "type": "number", "example": 2 },
+          "checkinDate": {
+            "type": "string",
+            "example": "2025-01-01T12:00:00.000Z",
+            "description": "Ngày đặt phòng: YYYY-MM-DDThh:mm:ss.sssZ"
+          },
+          "checkoutDate": {
+            "type": "string",
+            "example": "2025-01-01T14:00:00.000Z",
+            "description": "Ngày trả phòng: YYYY-MM-DDThh:mm:ss.sssZ"
+          }
+        },
+        "required": ["roomId", "so_khach", "checkinDate", "checkoutDate"]
+      },
+      "UpdateBookingDto": {
+        "type": "object",
+        "properties": {
+          "roomId": { "type": "number", "example": 1 },
+          "so_khach": { "type": "number", "example": 2 },
+          "checkinDate": {
+            "type": "string",
+            "example": "2025-01-01T12:00:00.000Z",
+            "description": "Ngày đặt phòng: YYYY-MM-DDThh:mm:ss.sssZ"
+          },
+          "checkoutDate": {
+            "type": "string",
+            "example": "2025-01-01T14:00:00.000Z",
+            "description": "Ngày trả phòng: YYYY-MM-DDThh:mm:ss.sssZ"
+          }
+        }
+      },
+      "CreateCommentDto": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "number",
+            "example": 1,
+            "description": "ID của phòng được bình luận"
+          },
+          "comment": {
+            "type": "string",
+            "example": "Phòng rất sạch sẽ và tiện nghi!",
+            "description": "Nội dung bình luận"
+          },
+          "star_comment": {
+            "type": "number",
+            "example": 5,
+            "description": "Điểm đánh giá (1-5 sao)"
+          }
+        },
+        "required": ["roomId", "comment", "star_comment"]
+      },
+      "UpdateCommentDto": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "number",
+            "example": 1,
+            "description": "ID của phòng được bình luận"
+          },
+          "comment": {
+            "type": "string",
+            "example": "Phòng rất sạch sẽ và tiện nghi!",
+            "description": "Nội dung bình luận"
+          },
+          "star_comment": {
+            "type": "number",
+            "example": 5,
+            "description": "Điểm đánh giá (1-5 sao)"
+          }
+        }
+      }
+    }
+  }
+}

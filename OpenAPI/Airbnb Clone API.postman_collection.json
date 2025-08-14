@@ -1,0 +1,2867 @@
+{
+	"info": {
+		"_postman_id": "2a120c81-da19-495e-9612-13338e9604cc",
+		"name": "Airbnb Clone API",
+		"description": "API for Airbnb clone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42227566",
+		"_collection_link": "https://www.postman.com/telecoms-administrator-30628533/workspace/be-node-49/collection/42227566-2a120c81-da19-495e-9612-13338e9604cc?action=share&source=collection_link&creator=42227566"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"item": [
+						{
+							"name": "Auth Controller signup",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"tutrieuduongtest1@gmail.com\",\n  \"password\": \"123aA@\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"gender\": true\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"tutrieuduong@gmail.com\",\n  \"password\": \"123aA@\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"gender\": true\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/signup",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"signup"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "signin",
+					"item": [
+						{
+							"name": "Auth Controller signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const data = pm.response.json()\r",
+											"\r",
+											"pm.globals.set(\"accessToken\", data.data.accessToken)\r",
+											"pm.globals.set(\"refreshToken\", data.data.refreshToken)\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"tutrieuduong@gmail.com\",\n  \"password\": \"123aA@\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"tutrieuduong@gmail.com\",\n  \"password\": \"123aA@\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/signin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"signin"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "refresh-token",
+					"item": [
+						{
+							"name": "Auth Controller refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const data = pm.response.json()\r",
+											"\r",
+											"pm.globals.set(\"accessToken\", data.data.accessToken)\r",
+											"pm.globals.set(\"refreshToken\", data.data.refreshToken)\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/refresh-token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"refreshToken\": \"your_refresh_token_here\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/refresh-token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"refresh-token"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Users Controller find One",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Users Controller update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"role\": \"user\",\n  \"gender\": true\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"role\": \"user\",\n  \"gender\": true\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Users Controller remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "avatar-local",
+					"item": [
+						{
+							"name": "Users Controller avatar Local",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/F:/Hình cưới/PSC DUONG - TRANG _ lưu ý ảnh sẽ xóa sau 10 ngày quý khách vui lòng tải xuống tránh mất dữ liệu _ -1-001/1. Đám hỏi/CDCR/DSC01872.JPG"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/avatar-local",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"avatar-local"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "avatar",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/avatar-local",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"avatar-local"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "avatar-cloud",
+					"item": [
+						{
+							"name": "Users Controller avatar Cloud",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/F:/Hình cưới/PSC DUONG - TRANG _ lưu ý ảnh sẽ xóa sau 10 ngày quý khách vui lòng tải xuống tránh mất dữ liệu _ -1-001/1. Đám hỏi/CDCR/DSC01872.JPG"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/avatar-cloud",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"avatar-cloud"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "avatar",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/avatar-cloud",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"avatar-cloud"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Users Controller find All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users?page=1&pageSize=10&keyword={\"name\": \"duong\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "keyword",
+									"value": "{\"name\": \"duong\"}",
+									"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name (tên)\n- email (địa chỉ email)\n- phone (số điện thoại)\n- gender (giới tính: nam (true), nữ (false))\n- role (vai trò: admin/user)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name\":\"John\"}'"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users?page=1&pageSize=10&keyword={\"name\": \"John\", \"email\": \"john@example.com\", \"phone\": \"0123\"}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "keyword",
+											"value": "{\"name\": \"John\", \"email\": \"john@example.com\", \"phone\": \"0123\"}",
+											"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name (tên)\n- email (địa chỉ email)\n- phone (số điện thoại)\n- gender (giới tính: nam (true), nữ (false))\n- role (vai trò: admin/user)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name\":\"John\"}'"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Users Controller create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"tutrieuduongtesst@gmail.com\",\n  \"password\": \"123aA@\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"gender\": true,\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"tutrieuduong@gmail.com\",\n  \"password\": \"123aA@\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0123456789\",\n  \"birth_day\": \"2000-01-01\",\n  \"gender\": true,\n  \"role\": \"user\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "locations",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Locations Controller find One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/locations/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"locations",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Locations Controller update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name_location\": \"Ho Chi Minh City\",\n  \"province\": \"Ho Chi Minh\",\n  \"country\": \"Vietnam\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/locations/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4875.680542713952",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name_location\": \"Ho Chi Minh City\",\n  \"province\": \"Ho Chi Minh\",\n  \"country\": \"Vietnam\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/locations/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"locations",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Locations Controller remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4875.680542713952",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/locations/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"locations",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "upload",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Locations Controller upload",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "picture",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/locations/upload/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"locations",
+												"upload",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4875.680542713952",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "multipart/form-data"
+													},
+													{
+														"key": "Authorization",
+														"value": "Bearer <token>",
+														"description": "Added as a part of security scheme: bearer"
+													}
+												],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "picture",
+															"type": "file",
+															"src": []
+														}
+													]
+												},
+												"url": {
+													"raw": "{{baseUrl}}/locations/upload/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"locations",
+														"upload",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Locations Controller create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name_location\": \"Ho Chi Minh City\",\n  \"province\": \"Ho Chi Minh\",\n  \"country\": \"Vietnam\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/locations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name_location\": \"Ho Chi Minh City\",\n  \"province\": \"Ho Chi Minh\",\n  \"country\": \"Vietnam\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Locations Controller find All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/locations?page=1&pageSize=10&keyword={\"name_location\": \"Ho Chi Minh\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"locations"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "keyword",
+									"value": "{\"name_location\": \"Ho Chi Minh\"}",
+									"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name_location (tên vị trí)\n- province (tỉnh)\n- country (quốc gia)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name_location\": \"Ho Chi Minh\", \"province\": \"Ho Chi Minh\", \"country\": \"Vietnam\"}'"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations?page=1&pageSize=10&keyword={\"name_location\": \"Ho Chi Minh\"}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "keyword",
+											"value": "{\"name_location\": \"Ho Chi Minh\"}",
+											"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n- name_location (tên vị trí)\n- province (tỉnh)\n- country (quốc gia)\n\nLưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"name_location\": \"Ho Chi Minh\", \"province\": \"Ho Chi Minh\", \"country\": \"Vietnam\"}'"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Room Controller find One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/room/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/room/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"room",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Room Controller update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ten_phong\": \"Phòng Deluxe\",\n  \"so_khach\": 4,\n  \"phong_ngu\": 2,\n  \"giuong\": 2,\n  \"phong_tam\": 1,\n  \"mo_ta\": \"Phòng rộng, có ban công...\",\n  \"gia_tien\": 500000,\n  \"quantity\": 1,\n  \"may_giat\": true,\n  \"ban_la\": false,\n  \"tivi\": true,\n  \"dieu_hoa\": true,\n  \"wifi\": true,\n  \"bep\": true,\n  \"do_xe\": true,\n  \"ho_boi\": true,\n  \"ban_ui\": false,\n  \"locationId\": 1\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/room/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"ten_phong\": \"Phòng Deluxe\",\n  \"so_khach\": 4,\n  \"phong_ngu\": 2,\n  \"giuong\": 2,\n  \"phong_tam\": 1,\n  \"mo_ta\": \"Phòng rộng, có ban công...\",\n  \"gia_tien\": 500000,\n  \"quantity\": 1,\n  \"may_giat\": true,\n  \"ban_la\": false,\n  \"tivi\": true,\n  \"dieu_hoa\": true,\n  \"wifi\": true,\n  \"bep\": true,\n  \"do_xe\": true,\n  \"ho_boi\": true,\n  \"ban_ui\": false,\n  \"locationId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/room/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"room",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Room Controller remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/room/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/room/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"room",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "upload",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Room Controller upload",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "pictures",
+													"value": "string,string",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/room/upload/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"room",
+												"upload",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4875.680542713952",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "multipart/form-data"
+													},
+													{
+														"key": "Authorization",
+														"value": "Bearer <token>",
+														"description": "Added as a part of security scheme: bearer"
+													}
+												],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "pictures",
+															"value": "string,string",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{baseUrl}}/room/upload/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"room",
+														"upload",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "picture",
+					"item": [
+						{
+							"name": "{imageId}",
+							"item": [
+								{
+									"name": "Room Controller delete Picture",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/room/picture/:imageId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"room",
+												"picture",
+												":imageId"
+											],
+											"variable": [
+												{
+													"key": "imageId",
+													"value": "4875.680542713952",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer <token>",
+														"description": "Added as a part of security scheme: bearer"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/room/picture/:imageId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"room",
+														"picture",
+														":imageId"
+													],
+													"variable": [
+														{
+															"key": "imageId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Room Controller create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ten_phong\": \"Phòng Deluxe\",\n  \"so_khach\": 4,\n  \"phong_ngu\": 2,\n  \"giuong\": 2,\n  \"phong_tam\": 1,\n  \"gia_tien\": 500000,\n  \"quantity\": 1,\n  \"locationId\": 1,\n  \"mo_ta\": \"Phòng rộng, có ban công...\",\n  \"may_giat\": true,\n  \"ban_la\": false,\n  \"tivi\": true,\n  \"dieu_hoa\": true,\n  \"wifi\": true,\n  \"bep\": true,\n  \"do_xe\": true,\n  \"ho_boi\": true,\n  \"ban_ui\": false\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/room",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ten_phong\": \"Phòng Deluxe\",\n  \"so_khach\": 4,\n  \"phong_ngu\": 2,\n  \"giuong\": 2,\n  \"phong_tam\": 1,\n  \"gia_tien\": 500000,\n  \"quantity\": 1,\n  \"locationId\": 1,\n  \"mo_ta\": \"Phòng rộng, có ban công...\",\n  \"may_giat\": true,\n  \"ban_la\": false,\n  \"tivi\": true,\n  \"dieu_hoa\": true,\n  \"wifi\": true,\n  \"bep\": true,\n  \"do_xe\": true,\n  \"ho_boi\": true,\n  \"ban_ui\": false\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/room",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Room Controller find All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/room?page=1&pageSize=10&keyword={\"ten_phong\": \"Luxury\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"room"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "keyword",
+									"value": "{\"ten_phong\": \"Luxury\"}",
+									"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n        \n    - Kiểu String: ten_phong; mo_ta\n\n    - Kiểu number: so_khach; phong_ngu; giuong; phong_tam; gia_tien; locationId\n    \n    - Kiểu boolean: may_giat; ban_la; tivi; dieu_hoa; wifi; bep; do_xe; ho_boi; ban_ui\n\n    Lưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"ten_phong\": \"Luxury\", \"so_khach\": 4, \"wifi\": true}'"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/room?page=1&pageSize=10&keyword={\"ten_phong\": \"Luxury\"}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "keyword",
+											"value": "{\"ten_phong\": \"Luxury\"}",
+											"description": "Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:\n        \n    - Kiểu String: ten_phong; mo_ta\n\n    - Kiểu number: so_khach; phong_ngu; giuong; phong_tam; gia_tien; locationId\n    \n    - Kiểu boolean: may_giat; ban_la; tivi; dieu_hoa; wifi; bep; do_xe; ho_boi; ban_ui\n\n    Lưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{\"ten_phong\": \"Luxury\", \"so_khach\": 4, \"wifi\": true}'"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Booking Controller find One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/booking/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"booking",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/booking/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"booking",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Booking Controller update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roomId\": 1,\n  \"so_khach\": 2,\n  \"checkinDate\": \"2025-01-01T12:00:00.000Z\",\n  \"checkoutDate\": \"2025-01-01T14:00:00.000Z\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/booking/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"booking",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"roomId\": 1,\n  \"so_khach\": 2,\n  \"checkinDate\": \"2025-01-01T12:00:00.000Z\",\n  \"checkoutDate\": \"2025-01-01T14:00:00.000Z\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/booking/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"booking",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Booking Controller remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/booking/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"booking",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/booking/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"booking",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "check",
+					"item": [
+						{
+							"name": "availableRooms",
+							"item": [
+								{
+									"name": "Booking Controller check Available Room",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/booking/check/availableRooms?roomId=1&checkinDate=2025-08-14T12:00:00.000Z&checkoutDate=2025-08-15T12:00:00.000Z",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"booking",
+												"check",
+												"availableRooms"
+											],
+											"query": [
+												{
+													"key": "roomId",
+													"value": "1",
+													"description": "(Required) ID của phòng cần kiểm tra"
+												},
+												{
+													"key": "checkinDate",
+													"value": "2025-08-14T12:00:00.000Z",
+													"description": "(Required) Ngày check-in (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)"
+												},
+												{
+													"key": "checkoutDate",
+													"value": "2025-08-15T12:00:00.000Z",
+													"description": "(Required) Ngày check-out (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/booking/check/availableRooms?roomId=1&checkinDate=2025-08-14T12:00:00.000Z&checkoutDate=2025-08-15T12:00:00.000Z",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"booking",
+														"check",
+														"availableRooms"
+													],
+													"query": [
+														{
+															"key": "roomId",
+															"value": "1",
+															"description": "(Required) ID của phòng cần kiểm tra"
+														},
+														{
+															"key": "checkinDate",
+															"value": "2025-08-14T12:00:00.000Z",
+															"description": "(Required) Ngày check-in (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)"
+														},
+														{
+															"key": "checkoutDate",
+															"value": "2025-08-15T12:00:00.000Z",
+															"description": "(Required) Ngày check-out (định dạng ISO: YYYY-MM-DDThh:mm:ss.sssZ)"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Booking Controller create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roomId\": 1,\n  \"so_khach\": 2,\n  \"checkinDate\": \"2025-01-01T12:00:00.000Z\",\n  \"checkoutDate\": \"2025-01-01T14:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roomId\": 1,\n  \"so_khach\": 2,\n  \"checkinDate\": \"2025-01-01T12:00:00.000Z\",\n  \"checkoutDate\": \"2025-01-01T14:00:00.000Z\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/booking",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Booking Controller find All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/booking?page=1&pageSize=10&userBookingId=1&roomId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "userBookingId",
+									"value": "1",
+									"description": "Lọc theo ID người đặt phòng"
+								},
+								{
+									"key": "roomId",
+									"value": "1",
+									"description": "Lọc theo ID phòng"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/booking?page=1&pageSize=10&userBookingId=1&roomId=1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"booking"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "userBookingId",
+											"value": "1",
+											"description": "Lọc theo ID người đặt phòng"
+										},
+										{
+											"key": "roomId",
+											"value": "1",
+											"description": "Lọc theo ID phòng"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Comment Controller find One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comment/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/comment/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"comment",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Comment Controller update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roomId\": 1,\n  \"comment\": \"Phòng rất sạch sẽ và tiện nghi!\",\n  \"star_comment\": 5\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comment/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"roomId\": 1,\n  \"comment\": \"Phòng rất sạch sẽ và tiện nghi!\",\n  \"star_comment\": 5\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/comment/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"comment",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Comment Controller remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comment/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/comment/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"comment",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Comment Controller create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roomId\": 1,\n  \"comment\": \"Phòng rất sạch sẽ và tiện nghi!\",\n  \"star_comment\": 5\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roomId\": 1,\n  \"comment\": \"Phòng rất sạch sẽ và tiện nghi!\",\n  \"star_comment\": 5\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comment",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comment"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Comment Controller find All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comment?page=1&pageSize=10&roomId=1&userCommentId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comment"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "roomId",
+									"value": "1",
+									"description": "Lọc bình luận theo ID phòng"
+								},
+								{
+									"key": "userCommentId",
+									"value": "1",
+									"description": "Lọc bình luận theo ID phòng"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comment?page=1&pageSize=10&roomId=1&userCommentId=1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comment"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "roomId",
+											"value": "1",
+											"description": "Lọc bình luận theo ID phòng"
+										},
+										{
+											"key": "userCommentId",
+											"value": "1",
+											"description": "Lọc bình luận theo ID phòng"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
