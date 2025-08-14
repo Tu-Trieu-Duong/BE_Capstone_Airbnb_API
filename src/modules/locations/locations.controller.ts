@@ -1,5 +1,3 @@
-import { locations } from './../../../generated/prisma/index.d';
-import { ProtectGuard } from 'src/common/protect/protect.guard';
 import {
   Controller,
   Get,
@@ -25,6 +23,7 @@ import { User } from 'src/common/decorator/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadLocal } from 'src/common/multer/local.multer';
 import { Roles } from 'src/common/decorator/role.decorator';
+import { users } from 'generated/prisma';
 
 @Controller('locations')
 export class LocationsController {
@@ -56,10 +55,10 @@ export class LocationsController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateLocationDto: UpdateLocationDto,
-    @User() user,
+    @Body() body: UpdateLocationDto,
+    @User() user: users,
   ) {
-    return this.locationsService.update(+id, updateLocationDto, user);
+    return this.locationsService.update(+id, body, user);
   }
 
   @ApiBearerAuth()

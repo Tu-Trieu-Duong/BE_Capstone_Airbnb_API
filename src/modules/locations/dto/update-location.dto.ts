@@ -1,20 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
+import { CreateLocationDto } from './create-location.dto';
 
-export class UpdateLocationDto {
-  @ApiProperty({ example: 'Ho Chi Minh City' })
-  @IsNotEmpty()
-  @IsOptional()
-  @IsString()
-  name_location?: string;
-
-  @ApiProperty({ example: 'Ho Chi Minh' })
-  @IsOptional()
-  @IsString()
-  province?: string;
-
-  @ApiProperty({ example: 'Vietnam' })
-  @IsOptional()
-  @IsString()
-  country?: string;
-}
+export class UpdateLocationDto extends PartialType(CreateLocationDto) {}

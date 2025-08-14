@@ -9,10 +9,12 @@ import { UsersModule } from './modules/users/users.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { LocationsModule } from './modules/locations/locations.module';
 import { RoomModule } from './modules/room/room.module';
+import { BookingModule } from './modules/booking/booking.module';
+import { CommentModule } from './modules/comment/comment.module';
 
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, PrismaModule, UsersModule, LocationsModule, RoomModule],
+  imports: [ConfigModule.forRoot(), AuthModule, PrismaModule, UsersModule, LocationsModule, RoomModule,  BookingModule, CommentModule],
   controllers: [AppController],
   providers: [AppService, ProtectStrategy],
 })

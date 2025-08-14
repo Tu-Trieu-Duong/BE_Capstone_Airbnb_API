@@ -1,6 +1,7 @@
 import * as multer from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
+import { BadRequestException } from '@nestjs/common';
 
 fs.mkdirSync('images/', { recursive: true });
 
@@ -19,5 +20,20 @@ export const uploadLocal = {
   storage: storage,
   limits: {
     fileSize: 20 * 1024 * 1024,
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|webp/;
+    const extname = allowedTypes.test(
+      path.extname(file.originalname).toLowerCase(),
+    );
+    const mimetype = allowedTypes.test(file.mimetype);
+
+    if (extname && mimetype) {
+      cb(null, true);
+    } else {
+      cb(
+        new BadRequestException('Chỉ cho phép file ảnh (jpeg, jpg, png, webp)'),
+      );
+    }
   },
 };

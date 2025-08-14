@@ -8,7 +8,7 @@ import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { FindAllLocationDto } from './dto/find-all-location.dto';
-import { locations, users } from 'generated/prisma';
+import { users } from 'generated/prisma';
 import * as path from 'path';
 import * as fs from 'fs';
 import { cloudinary } from 'src/common/cloudinary/init.cloudinary';
@@ -46,7 +46,7 @@ export class LocationsService {
         delete parsedKeyword[key];
         return;
       } else if (typeof value === 'string') {
-        parsedKeyword[key] = { contains: value, mode: 'insensitive' };
+        parsedKeyword[key] = { contains: value };
       }
     });
 
@@ -87,22 +87,18 @@ export class LocationsService {
     return location;
   }
 
-  async update(
-    id: number,
-    updateLocationDto: UpdateLocationDto,
-    currentUser: users,
-  ) {
-    const isAdmin = currentUser.role === 'admin';
+  async update(id: number, body: UpdateLocationDto, user: users) {
+    const isAdmin = user.role === 'admin';
     if (!isAdmin) {
       throw new ForbiddenException(
         'Bạn không có quyền thực hiện chức năng này',
       );
     }
 
-    if (updateLocationDto.name_location) {
+    if (body.name_location) {
       const existing = await this.prisma.locations.findFirst({
         where: {
-          name_location: updateLocationDto.name_location,
+          name_location: body.name_location,
           id: { not: id },
           isDeleted: false,
         },
@@ -121,7 +117,7 @@ export class LocationsService {
 
     const updateLocation = await this.prisma.locations.update({
       where: { id },
-      data: updateLocationDto,
+      data: body,
     });
 
     return updateLocation;
@@ -132,28 +128,28 @@ export class LocationsService {
       throw new BadRequestException('Chưa tìm thấy file');
     }
 
-    const picture = await this.prisma.locations.findUnique({ where: { id } });
+    const location = await this.prisma.locations.findUnique({ where: { id } });
 
-    if (!picture) {
+    if (!location) {
       throw new BadRequestException('Chưa tìm thấy vị trí');
     }
 
     try {
       await this.prisma.locations.update({
         where: {
-          id: Number(picture.id),
+          id: Number(location.id),
         },
         data: {
           picture: file.filename,
         },
       });
 
-      if (picture.picture) {
-        const oldFilePath = path.join('images', picture.picture);
+      if (location.picture) {
+        const oldFilePath = path.join('images', location.picture);
         if (fs.existsSync(oldFilePath)) {
           fs.unlinkSync(oldFilePath);
         }
-        cloudinary.uploader.destroy(picture.picture);
+        cloudinary.uploader.destroy(location.picture);
       }
     } catch (error) {
       console.log(error);
@@ -162,7 +158,7 @@ export class LocationsService {
 
     return {
       message: 'Cập nhật hình ảnh vị trí thành công',
-      locationId: picture.id,
+      locationId: location.id,
       folder: 'images/',
       filename: file.filename,
       imgUrl: `images/${file.filename}`,

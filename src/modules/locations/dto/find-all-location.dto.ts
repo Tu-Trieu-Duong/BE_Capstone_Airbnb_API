@@ -22,14 +22,13 @@ export class FindAllLocationDto {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example:
-      '{"name_location": "Ho Chi Minh"}',
+    example: '{"name_location": "Ho Chi Minh"}',
     description: `Tìm kiếm nâng cao theo nhiều trường (định dạng JSON string). Có thể tìm theo:
 - name_location (tên vị trí)
 - province (tỉnh)
 - country (quốc gia)
 
-Lưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{"name-location": "Ho Chi Minh", "province": "Ho Chi Minh", "country": "Vietnam"}'`,
+Lưu ý: Đây là một chuỗi JSON chứ không phải object thực. Ví dụ: '{"name_location": "Ho Chi Minh", "province": "Ho Chi Minh", "country": "Vietnam"}'`,
   })
-  keyword: string;
+  keyword?: string;
 }
